@@ -122,17 +122,60 @@ def shell_command(command):
     return shlex.join(str(part) for part in command)
 
 
-def tee_log_to_terminal(path, stop_event):
-    """Follow a subprocess log file and echo new output without replacing it."""
+STEP_LINE = re.compile(
+    r"^step (\d+): tokens=(\d+) train_s=([0-9.]+) val_loss=([0-9.]+)\s*$"
+)
+
+
+def format_run_progress(progress, step, tokens, val_loss, spinner=""):
+    step_percent = 100.0 * step / progress["total_steps"]
+    token_percent = 100.0 * tokens / progress["total_tokens"]
+    loss = "pending" if val_loss is None else f"{val_loss:.4f}"
+    suffix = f" {spinner}" if spinner else ""
+    return (
+        f"[{progress['index']:02d}/{progress['count']:02d}] "
+        f"{progress['optimizer']} lr={progress['learning_rate']:.6g} | "
+        f"step {step:,}/{progress['total_steps']:,} ({step_percent:5.1f}%) | "
+        f"tokens {tokens:,}/{progress['total_tokens']:,} ({token_percent:5.1f}%) | "
+        f"val_loss={loss}{suffix}"
+    )
+
+
+def show_run_progress(path, stop_event, progress):
+    """Tail training output, showing only the requested compact progress fields."""
+    step = tokens = 0
+    val_loss = None
+    interactive = sys.stdout.isatty()
+    spin = "|/-\\"
+    spin_index = 0
+    if interactive:
+        sys.stdout.write("\033[K" + format_run_progress(progress, step, tokens, val_loss))
+        sys.stdout.flush()
     with Path(path).open("r", encoding="utf-8", errors="replace") as stream:
         while True:
             line = stream.readline()
             if line:
-                print(line, end="", flush=True)
+                match = STEP_LINE.match(line)
+                if match:
+                    step, tokens = int(match.group(1)), int(match.group(2))
+                    val_loss = float(match.group(4))
+                    if interactive:
+                        sys.stdout.write("\r\033[K")
+                    print(format_run_progress(progress, step, tokens, val_loss), flush=True)
                 continue
             if stop_event.is_set():
                 break
-            stop_event.wait(0.10)
+            if interactive:
+                sys.stdout.write(
+                    "\r\033[K"
+                    + format_run_progress(progress, step, tokens, val_loss, spin[spin_index])
+                )
+                sys.stdout.flush()
+                spin_index = (spin_index + 1) % len(spin)
+            stop_event.wait(0.5)
+    if interactive:
+        sys.stdout.write("\r\033[K")
+        sys.stdout.flush()
 
 
 class SweepRunner:
@@ -274,7 +317,7 @@ class SweepRunner:
             stream.flush()
             os.fsync(stream.fileno())
 
-    def execute(self, command, log_path, extra_env=None):
+    def execute(self, command, log_path, extra_env=None, progress=None):
         log_path = Path(log_path)
         log_path.parent.mkdir(parents=True, exist_ok=True)
         env = dict(os.environ)
@@ -282,17 +325,19 @@ class SweepRunner:
         if extra_env:
             env.update(extra_env)
         self.append_command(command, log_path)
-        print(f"Running: {shell_command(command)}", flush=True)
-        print(f"Live output: {log_path}  (saved and echoed to this terminal)", flush=True)
+        if progress is None:
+            print(f"Running: {shell_command(command)}", flush=True)
         with log_path.open("w", encoding="utf-8") as stream:
             stop_event = threading.Event()
-            echo_thread = threading.Thread(
-                target=tee_log_to_terminal,
-                args=(log_path, stop_event),
-                name=f"tee-{log_path.name}",
-                daemon=True,
-            )
-            echo_thread.start()
+            echo_thread = None
+            if progress is not None:
+                echo_thread = threading.Thread(
+                    target=show_run_progress,
+                    args=(log_path, stop_event, progress),
+                    name=f"progress-{log_path.name}",
+                    daemon=True,
+                )
+                echo_thread.start()
             try:
                 return run_monitored(
                     [str(part) for part in command],
@@ -303,7 +348,8 @@ class SweepRunner:
                 )
             finally:
                 stop_event.set()
-                echo_thread.join(timeout=2)
+                if echo_thread is not None:
+                    echo_thread.join(timeout=2)
 
     def run_check(self, name, command, log_path, extra_env=None):
         record = {
@@ -411,6 +457,24 @@ class SweepRunner:
     def run_training(self, record):
         self.current_record = record
         command = [sys.executable, "train.py", record["config"]]
+        if record["protocol"] != "tokens":
+            raise SweepError("The compact progress display currently requires a token budget")
+        per_step = (
+            self.base_values["batch_size"]
+            * self.base_values["block_size"]
+            * self.base_values["gradient_accumulation_steps"]
+        )
+        total_tokens = self.base_values["max_tokens"]
+        if per_step <= 0 or total_tokens <= 0 or total_tokens % per_step:
+            raise SweepError("Invalid token budget for progress display")
+        progress = {
+            "index": int(record["name"][:2]),
+            "count": 6,
+            "optimizer": record["optimizer"],
+            "learning_rate": record["learning_rate"],
+            "total_steps": total_tokens // per_step,
+            "total_tokens": total_tokens,
+        }
         record.update(
             status="running",
             command=command,
@@ -420,7 +484,7 @@ class SweepRunner:
         self.save()
         started = datetime.now(timezone.utc)
         try:
-            result = self.execute(command, Path(record["log"]))
+            result = self.execute(command, Path(record["log"]), progress=progress)
         except BaseException as exc:
             record.update(
                 status="interrupted" if isinstance(exc, KeyboardInterrupt) else "failed",
@@ -469,6 +533,13 @@ class SweepRunner:
                 "best_val_loss": summary["best_val_loss"],
                 "budget": summary["budget"],
             },
+        )
+        summary_value = record["summary"]["endpoint_scores"]["loss"]
+        print(
+            f"[{record['name'][:2]}/06] {record['optimizer']} "
+            f"lr={record['learning_rate']:.6g} | completed | "
+            f"endpoint_val_loss={summary_value:.4f}",
+            flush=True,
         )
         self.current_record = None
         self.save()
