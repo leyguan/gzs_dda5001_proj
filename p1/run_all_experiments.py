@@ -22,6 +22,7 @@ import shlex
 import statistics
 import subprocess
 import sys
+import threading
 import traceback
 
 from checkpoint_io import RunInterrupted, run_monitored
@@ -119,6 +120,19 @@ def read_literal_config(path):
 
 def shell_command(command):
     return shlex.join(str(part) for part in command)
+
+
+def tee_log_to_terminal(path, stop_event):
+    """Follow a subprocess log file and echo new output without replacing it."""
+    with Path(path).open("r", encoding="utf-8", errors="replace") as stream:
+        while True:
+            line = stream.readline()
+            if line:
+                print(line, end="", flush=True)
+                continue
+            if stop_event.is_set():
+                break
+            stop_event.wait(0.10)
 
 
 class SweepRunner:
@@ -269,14 +283,27 @@ class SweepRunner:
             env.update(extra_env)
         self.append_command(command, log_path)
         print(f"Running: {shell_command(command)}", flush=True)
+        print(f"Live output: {log_path}  (saved and echoed to this terminal)", flush=True)
         with log_path.open("w", encoding="utf-8") as stream:
-            return run_monitored(
-                [str(part) for part in command],
-                cwd=PROJECT_ROOT,
-                env=env,
-                stdout=stream,
-                stderr=subprocess.STDOUT,
+            stop_event = threading.Event()
+            echo_thread = threading.Thread(
+                target=tee_log_to_terminal,
+                args=(log_path, stop_event),
+                name=f"tee-{log_path.name}",
+                daemon=True,
             )
+            echo_thread.start()
+            try:
+                return run_monitored(
+                    [str(part) for part in command],
+                    cwd=PROJECT_ROOT,
+                    env=env,
+                    stdout=stream,
+                    stderr=subprocess.STDOUT,
+                )
+            finally:
+                stop_event.set()
+                echo_thread.join(timeout=2)
 
     def run_check(self, name, command, log_path, extra_env=None):
         record = {
