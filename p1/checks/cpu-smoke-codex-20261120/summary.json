@@ -1,0 +1,18 @@
+{
+  "status": "completed",
+  "step": 8,
+  "tokens": 1024,
+  "train_seconds": 0.060960374015849084,
+  "checkpoint_seconds": 0.01555033399927197,
+  "wall_seconds": 0.48998658300115494,
+  "endpoint_scores": {
+    "loss": 3.6954946517944336,
+    "perplexity": 40.265485057133574,
+    "bits_per_character": 5.331471807775516
+  },
+  "best_val_loss": 3.6954946517944336,
+  "tokens_per_second": 16797.797200748315,
+  "peak_memory_bytes": null,
+  "budget": "tokens",
+  "output": "/Users/leyguan/Workspaces/gzs/courses/DDA5001_MachineLearning/project/DDA5001-26Fall/p1/checks/cpu-smoke-codex-20261120"
+}

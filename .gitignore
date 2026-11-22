@@ -12,19 +12,15 @@ Thumbs.db
 .idea/
 .vscode/
 
-# Runs and generated artifacts. The supplied data/*.bin and meta.pkl are tracked.
-runs/
-outputs/
-checks/
-setup-evidence/
+# Generated model weights and checkpoints.
 *.pt
 *.pth
 *.ckpt
-*.pt.sha256
-*.log
+*.safetensors
+*.gguf
+*.onnx
 *.tmp
 *.zip
-requirements-local-resolved.txt
 
 # Personal credentials and agent state.
 .env
