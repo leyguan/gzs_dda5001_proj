@@ -1,0 +1,48 @@
+[2026-11-20T03:37:08.602673+00:00] cwd=/root/autodl-tmp/gzs_dda5001_proj/p1
+/root/miniconda3/bin/python check_solution.py
+log=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/check_solution.log
+[2026-11-20T03:37:11.610896+00:00] cwd=/root/autodl-tmp/gzs_dda5001_proj/p1
+/root/miniconda3/bin/python train.py config/smoke.py --device=cpu --out_dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/preflight/cpu-smoke
+log=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/cpu_smoke.log
+[2026-11-20T03:37:14.370563+00:00] cwd=/root/autodl-tmp/gzs_dda5001_proj/p1
+/root/miniconda3/bin/python train.py /root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/01-adamw-default.py
+log=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/01-adamw-default.log
+[2026-11-20T03:54:04.189876+00:00] cwd=/root/autodl-tmp/gzs_dda5001_proj/p1
+/root/miniconda3/bin/python train.py /root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/02-muon-default.py
+log=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/02-muon-default.log
+[2026-11-20T04:12:59.382382+00:00] cwd=/root/autodl-tmp/gzs_dda5001_proj/p1
+/root/miniconda3/bin/python train.py /root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/03-sgdm-default.py
+log=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/03-sgdm-default.log
+[2026-11-20T04:29:05.825995+00:00] cwd=/root/autodl-tmp/gzs_dda5001_proj/p1
+/root/miniconda3/bin/python train.py /root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/04-adamw-selected.py
+log=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/04-adamw-selected.log
+[2026-11-20T04:45:30.265132+00:00] cwd=/root/autodl-tmp/gzs_dda5001_proj/p1
+/root/miniconda3/bin/python train.py /root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/05-muon-selected.py
+log=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/05-muon-selected.log
+[2026-11-20T05:04:21.345215+00:00] cwd=/root/autodl-tmp/gzs_dda5001_proj/p1
+/root/miniconda3/bin/python train.py /root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/06-sgdm-selected.py
+log=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/06-sgdm-selected.log
+[2026-11-20T05:20:30.520149+00:00] cwd=/root/autodl-tmp/gzs_dda5001_proj/p1
+/root/miniconda3/bin/python plot.py --run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/01-adamw-default
+log=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/01-adamw-default-plot.log
+[2026-11-20T05:20:31.276875+00:00] cwd=/root/autodl-tmp/gzs_dda5001_proj/p1
+/root/miniconda3/bin/python plot.py --run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/02-muon-default
+log=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/02-muon-default-plot.log
+[2026-11-20T05:20:32.033070+00:00] cwd=/root/autodl-tmp/gzs_dda5001_proj/p1
+/root/miniconda3/bin/python plot.py --run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/03-sgdm-default
+log=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/03-sgdm-default-plot.log
+[2026-11-20T05:20:32.788288+00:00] cwd=/root/autodl-tmp/gzs_dda5001_proj/p1
+/root/miniconda3/bin/python plot.py --run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/04-adamw-selected
+log=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/04-adamw-selected-plot.log
+[2026-11-20T05:20:33.544349+00:00] cwd=/root/autodl-tmp/gzs_dda5001_proj/p1
+/root/miniconda3/bin/python plot.py --run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/05-muon-selected
+log=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/05-muon-selected-plot.log
+[2026-11-20T05:20:34.300213+00:00] cwd=/root/autodl-tmp/gzs_dda5001_proj/p1
+/root/miniconda3/bin/python plot.py --run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/06-sgdm-selected
+log=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/06-sgdm-selected-plot.log
+[2026-11-20T05:20:35.057677+00:00] cwd=/root/autodl-tmp/gzs_dda5001_proj/p1
+/root/miniconda3/bin/python plot.py --runs-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707
+log=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/comparison-plot.log
+[2026-11-20T05:20:35.811445+00:00] cwd=/root/autodl-tmp/gzs_dda5001_proj/p1
+/root/miniconda3/bin/python sample.py --checkpoint=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/01-adamw-default/last.pt --device=cuda --tokens=400 --output=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/representative-sample.txt
+log=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/sample.log

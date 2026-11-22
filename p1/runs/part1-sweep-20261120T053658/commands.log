@@ -1,0 +1,9 @@
+[2026-11-19T21:36:59.722589+00:00] cwd=/root/autodl-tmp/gzs_dda5001_proj/p1
+/root/miniconda3/bin/python check_solution.py
+log=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T053658/logs/check_solution.log
+[2026-11-19T21:37:03.234677+00:00] cwd=/root/autodl-tmp/gzs_dda5001_proj/p1
+/root/miniconda3/bin/python train.py config/smoke.py --device=cpu --out_dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T053658/preflight/cpu-smoke
+log=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T053658/logs/cpu_smoke.log
+[2026-11-19T21:37:05.496563+00:00] cwd=/root/autodl-tmp/gzs_dda5001_proj/p1
+/root/miniconda3/bin/python train.py /root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T053658/configs/01-adamw-default.py
+log=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T053658/logs/01-adamw-default.log

@@ -1,0 +1,18 @@
+{
+  "status": "completed",
+  "step": 5000,
+  "tokens": 92160000,
+  "train_seconds": 867.1671054884791,
+  "checkpoint_seconds": 84.14953900128603,
+  "wall_seconds": 966.4521711748093,
+  "endpoint_scores": {
+    "loss": 1.5540259033441544,
+    "perplexity": 4.730476338958144,
+    "bits_per_character": 2.241985464167603
+  },
+  "best_val_loss": 1.5458690375089645,
+  "tokens_per_second": 106277.09401878875,
+  "peak_memory_bytes": 20628256768,
+  "budget": "tokens",
+  "output": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/06-sgdm-selected"
+}

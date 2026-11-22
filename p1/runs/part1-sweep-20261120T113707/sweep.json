@@ -1,0 +1,914 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "created_at_utc": "2026-11-20T03:37:07.303113+00:00",
+  "script": {
+    "path": "/root/autodl-tmp/gzs_dda5001_proj/p1/run_all_experiments.py",
+    "argv": [
+      "run_all_experiments.py"
+    ],
+    "command": "/root/miniconda3/bin/python run_all_experiments.py",
+    "sha256": "e98a5331d20cceca51066ed5fe1cd0e85ecb8fdaadd09f7dae2312b54454e62a"
+  },
+  "project_root": "/root/autodl-tmp/gzs_dda5001_proj/p1",
+  "output_root": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707",
+  "base_config": {
+    "path": "/root/autodl-tmp/gzs_dda5001_proj/p1/config/train_shakespeare_char.py",
+    "sha256": "13329e8c0007b3ae527d167185bfd511a24213f02abfc129fd0404931d294a23",
+    "values": {
+      "optimizer_name": "adamw",
+      "out_dir": "runs/adamw-default",
+      "learning_rate": 0.0003,
+      "muon_learning_rate": 0.01,
+      "sgdm_learning_rate": 0.1,
+      "model_preset": "gpt2-medium",
+      "block_size": 256,
+      "batch_size": 72,
+      "gradient_accumulation_steps": 1,
+      "max_tokens": 92160000,
+      "max_seconds": 0.0,
+      "eval_interval": 500,
+      "eval_iters": 8,
+      "warmup_iters": 100,
+      "lr_schedule": "cosine",
+      "lr_decay_iters": 5000,
+      "min_lr_ratio": 0.1,
+      "lr_multiplier": 1.0,
+      "dropout": 0.2,
+      "weight_decay": 0.0,
+      "grad_clip": 1.0,
+      "beta1": 0.9,
+      "beta2": 0.99,
+      "muon_momentum": 0.95,
+      "sgdm_momentum": 0.9,
+      "sgdm_nesterov": false,
+      "seed": 42,
+      "eval_seed": 1729,
+      "dtype": "auto",
+      "compile": true
+    }
+  },
+  "expected_run_count": 6,
+  "lr_selection_policy": {
+    "version": 1,
+    "minimum_metrics_rows": 3,
+    "rise_threshold_rule": "max(0.02, 0.02 * abs(first_validation_loss))",
+    "unstable_rise_fraction": 0.3,
+    "ending_above_best_threshold": "max(0.05, 0.02 * abs(first_validation_loss))",
+    "slow_relative_improvement_below": 0.1,
+    "factors": {
+      "unstable_or_ending_above_best": 0.5,
+      "slow_and_smooth": 2.0,
+      "stable_default": 1.5
+    },
+    "rationale": "Use the default run's validation curve. Halve the LR when losses rise meaningfully or finish materially above their best value; double it only when improvement is slow and the curve is smooth; otherwise probe a moderately higher LR. The same rule is applied to all three optimizers."
+  },
+  "preflight": [
+    {
+      "name": "check_solution",
+      "command": [
+        "/root/miniconda3/bin/python",
+        "check_solution.py"
+      ],
+      "shell_command": "/root/miniconda3/bin/python check_solution.py",
+      "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/check_solution.log",
+      "started_at_utc": "2026-11-20T03:37:08.601650+00:00",
+      "status": "completed",
+      "returncode": 0,
+      "finished_at_utc": "2026-11-20T03:37:11.608523+00:00"
+    },
+    {
+      "name": "cpu_smoke",
+      "command": [
+        "/root/miniconda3/bin/python",
+        "train.py",
+        "config/smoke.py",
+        "--device=cpu",
+        "--out_dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/preflight/cpu-smoke"
+      ],
+      "shell_command": "/root/miniconda3/bin/python train.py config/smoke.py --device=cpu --out_dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/preflight/cpu-smoke",
+      "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/cpu_smoke.log",
+      "started_at_utc": "2026-11-20T03:37:11.609653+00:00",
+      "status": "completed",
+      "returncode": 0,
+      "finished_at_utc": "2026-11-20T03:37:14.366339+00:00"
+    }
+  ],
+  "runs": [
+    {
+      "name": "01-adamw-default",
+      "kind": "default",
+      "status": "completed",
+      "optimizer": "adamw",
+      "optimizer_name": "adamw",
+      "lr_field": "learning_rate",
+      "learning_rate": 0.0003,
+      "lr_selection": {
+        "mode": "provided_default",
+        "rationale": "This is the provided default learning rate for this optimizer."
+      },
+      "config": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/01-adamw-default.py",
+      "config_sha256": "11ca43470a3c601322ed7de5fdf5d2aa292d7e0b31efcca01754d3efae10cede",
+      "run_dir": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/01-adamw-default",
+      "protocol": "tokens",
+      "returncode": 0,
+      "command": [
+        "/root/miniconda3/bin/python",
+        "train.py",
+        "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/01-adamw-default.py"
+      ],
+      "shell_command": "/root/miniconda3/bin/python train.py /root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/01-adamw-default.py",
+      "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/01-adamw-default.log",
+      "analysis_commands": [
+        {
+          "command": [
+            "/root/miniconda3/bin/python",
+            "plot.py",
+            "--run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/01-adamw-default"
+          ],
+          "shell_command": "/root/miniconda3/bin/python plot.py --run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/01-adamw-default",
+          "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/01-adamw-default-plot.log",
+          "returncode": 0
+        }
+      ],
+      "started_at_utc": "2026-11-20T03:37:14.369696+00:00",
+      "finished_at_utc": "2026-11-20T03:54:04.087531+00:00",
+      "duration_seconds": 1009.717072,
+      "summary": {
+        "step": 5000,
+        "tokens": 92160000,
+        "train_seconds": 886.8103187009692,
+        "wall_seconds": 1006.7888513524085,
+        "endpoint_scores": {
+          "loss": 4.020456671714783,
+          "perplexity": 55.72654875539958,
+          "bits_per_character": 5.800292902391864
+        },
+        "best_val_loss": 1.5553164631128311,
+        "budget": "tokens"
+      }
+    },
+    {
+      "name": "02-muon-default",
+      "kind": "default",
+      "status": "completed",
+      "optimizer": "muon",
+      "optimizer_name": "muon",
+      "lr_field": "muon_learning_rate",
+      "learning_rate": 0.01,
+      "lr_selection": {
+        "mode": "provided_default",
+        "rationale": "This is the provided default learning rate for this optimizer."
+      },
+      "config": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/02-muon-default.py",
+      "config_sha256": "4ed016165e8071bc980487ea90d140d3717c3c4828d082ad14a7ba14c0d0cf13",
+      "run_dir": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/02-muon-default",
+      "protocol": "tokens",
+      "returncode": 0,
+      "command": [
+        "/root/miniconda3/bin/python",
+        "train.py",
+        "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/02-muon-default.py"
+      ],
+      "shell_command": "/root/miniconda3/bin/python train.py /root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/02-muon-default.py",
+      "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/02-muon-default.log",
+      "analysis_commands": [
+        {
+          "command": [
+            "/root/miniconda3/bin/python",
+            "plot.py",
+            "--run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/02-muon-default"
+          ],
+          "shell_command": "/root/miniconda3/bin/python plot.py --run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/02-muon-default",
+          "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/02-muon-default-plot.log",
+          "returncode": 0
+        }
+      ],
+      "started_at_utc": "2026-11-20T03:54:04.186315+00:00",
+      "finished_at_utc": "2026-11-20T04:12:59.369258+00:00",
+      "duration_seconds": 1135.179693,
+      "summary": {
+        "step": 5000,
+        "tokens": 92160000,
+        "train_seconds": 1053.4738200902939,
+        "wall_seconds": 1132.5471647121012,
+        "endpoint_scores": {
+          "loss": 4.060053497552872,
+          "perplexity": 57.97741264569381,
+          "bits_per_character": 5.857419046663419
+        },
+        "best_val_loss": 1.5412198901176453,
+        "budget": "tokens"
+      }
+    },
+    {
+      "name": "03-sgdm-default",
+      "kind": "default",
+      "status": "completed",
+      "optimizer": "sgdm",
+      "optimizer_name": "sgdm",
+      "lr_field": "sgdm_learning_rate",
+      "learning_rate": 0.1,
+      "lr_selection": {
+        "mode": "provided_default",
+        "rationale": "This is the provided default learning rate for this optimizer."
+      },
+      "config": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/03-sgdm-default.py",
+      "config_sha256": "b617d705aa0eabe0eb5284d32d63c72b0ea48939c64bfa3fa4bf2b0b931f9946",
+      "run_dir": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/03-sgdm-default",
+      "protocol": "tokens",
+      "returncode": 0,
+      "command": [
+        "/root/miniconda3/bin/python",
+        "train.py",
+        "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/03-sgdm-default.py"
+      ],
+      "shell_command": "/root/miniconda3/bin/python train.py /root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/03-sgdm-default.py",
+      "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/03-sgdm-default.log",
+      "analysis_commands": [
+        {
+          "command": [
+            "/root/miniconda3/bin/python",
+            "plot.py",
+            "--run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/03-sgdm-default"
+          ],
+          "shell_command": "/root/miniconda3/bin/python plot.py --run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/03-sgdm-default",
+          "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/03-sgdm-default-plot.log",
+          "returncode": 0
+        }
+      ],
+      "started_at_utc": "2026-11-20T04:12:59.379933+00:00",
+      "finished_at_utc": "2026-11-20T04:29:05.811032+00:00",
+      "duration_seconds": 966.428951,
+      "summary": {
+        "step": 5000,
+        "tokens": 92160000,
+        "train_seconds": 869.1939765848219,
+        "wall_seconds": 963.9622143097222,
+        "endpoint_scores": {
+          "loss": 1.6534517705440521,
+          "perplexity": 5.2249841823457945,
+          "bits_per_character": 2.3854266697129805
+        },
+        "best_val_loss": 1.5140759497880936,
+        "budget": "tokens"
+      }
+    },
+    {
+      "name": "04-adamw-selected",
+      "kind": "selected",
+      "status": "completed",
+      "optimizer": "adamw",
+      "optimizer_name": "adamw",
+      "lr_field": "learning_rate",
+      "learning_rate": 0.00015,
+      "lr_selection": {
+        "mode": "adaptive_after_default",
+        "classification": "unstable_or_ending_above_best",
+        "rationale": "The default curve rose often or ended materially above its best value, so the comparison run uses half the default LR.",
+        "default_lr": 0.0003,
+        "factor": 0.5,
+        "selected_lr": 0.00015,
+        "source_metrics": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/01-adamw-default/metrics.csv",
+        "evidence": {
+          "validation_points": 11,
+          "first_val_loss": 4.3350677490234375,
+          "final_val_loss": 4.020456671714783,
+          "best_val_loss": 1.5553164631128311,
+          "absolute_improvement_to_best": 2.7797512859106064,
+          "relative_improvement_to_best": 0.6412244160513528,
+          "rise_threshold": 0.08670135498046876,
+          "rise_fraction": 0.8,
+          "ending_above_best_threshold": 0.08670135498046876,
+          "ending_above_best": true,
+          "step_change_volatility": 0.896364608975085
+        }
+      },
+      "config": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/04-adamw-selected.py",
+      "config_sha256": "09c1e907dcbf4604f41980974c23fa6c0c813290ba595a247c4b5eff6d4632fa",
+      "run_dir": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/04-adamw-selected",
+      "protocol": "tokens",
+      "returncode": 0,
+      "command": [
+        "/root/miniconda3/bin/python",
+        "train.py",
+        "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/04-adamw-selected.py"
+      ],
+      "shell_command": "/root/miniconda3/bin/python train.py /root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/04-adamw-selected.py",
+      "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/04-adamw-selected.log",
+      "analysis_commands": [
+        {
+          "command": [
+            "/root/miniconda3/bin/python",
+            "plot.py",
+            "--run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/04-adamw-selected"
+          ],
+          "shell_command": "/root/miniconda3/bin/python plot.py --run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/04-adamw-selected",
+          "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/04-adamw-selected-plot.log",
+          "returncode": 0
+        }
+      ],
+      "started_at_utc": "2026-11-20T04:29:05.822990+00:00",
+      "finished_at_utc": "2026-11-20T04:45:30.248462+00:00",
+      "duration_seconds": 984.422848,
+      "summary": {
+        "step": 5000,
+        "tokens": 92160000,
+        "train_seconds": 865.2929114755243,
+        "wall_seconds": 981.8364591933787,
+        "endpoint_scores": {
+          "loss": 3.8217017352581024,
+          "perplexity": 45.681880680218136,
+          "bits_per_character": 5.513550141213611
+        },
+        "best_val_loss": 1.538702443242073,
+        "budget": "tokens"
+      }
+    },
+    {
+      "name": "05-muon-selected",
+      "kind": "selected",
+      "status": "completed",
+      "optimizer": "muon",
+      "optimizer_name": "muon",
+      "lr_field": "muon_learning_rate",
+      "learning_rate": 0.005,
+      "lr_selection": {
+        "mode": "adaptive_after_default",
+        "classification": "unstable_or_ending_above_best",
+        "rationale": "The default curve rose often or ended materially above its best value, so the comparison run uses half the default LR.",
+        "default_lr": 0.01,
+        "factor": 0.5,
+        "selected_lr": 0.005,
+        "source_metrics": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/02-muon-default/metrics.csv",
+        "evidence": {
+          "validation_points": 11,
+          "first_val_loss": 4.3350677490234375,
+          "final_val_loss": 4.060053497552872,
+          "best_val_loss": 1.5412198901176453,
+          "absolute_improvement_to_best": 2.7938478589057922,
+          "relative_improvement_to_best": 0.6444761698442114,
+          "rise_threshold": 0.08670135498046876,
+          "rise_fraction": 0.9,
+          "ending_above_best_threshold": 0.08670135498046876,
+          "ending_above_best": true,
+          "step_change_volatility": 0.9270546970770664
+        }
+      },
+      "config": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/05-muon-selected.py",
+      "config_sha256": "59cdeaac145f76aef9e0abd7e0b07e8916642106c4ec9a94fa43177b0986395c",
+      "run_dir": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/05-muon-selected",
+      "protocol": "tokens",
+      "returncode": 0,
+      "command": [
+        "/root/miniconda3/bin/python",
+        "train.py",
+        "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/05-muon-selected.py"
+      ],
+      "shell_command": "/root/miniconda3/bin/python train.py /root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/05-muon-selected.py",
+      "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/05-muon-selected.log",
+      "analysis_commands": [
+        {
+          "command": [
+            "/root/miniconda3/bin/python",
+            "plot.py",
+            "--run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/05-muon-selected"
+          ],
+          "shell_command": "/root/miniconda3/bin/python plot.py --run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/05-muon-selected",
+          "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/05-muon-selected-plot.log",
+          "returncode": 0
+        }
+      ],
+      "started_at_utc": "2026-11-20T04:45:30.261428+00:00",
+      "finished_at_utc": "2026-11-20T05:04:21.328741+00:00",
+      "duration_seconds": 1131.063945,
+      "summary": {
+        "step": 5000,
+        "tokens": 92160000,
+        "train_seconds": 1050.9144429042935,
+        "wall_seconds": 1128.5091724973172,
+        "endpoint_scores": {
+          "loss": 4.148629903793335,
+          "perplexity": 63.34714912575833,
+          "bits_per_character": 5.985207788686302
+        },
+        "best_val_loss": 1.5518745183944702,
+        "budget": "tokens"
+      }
+    },
+    {
+      "name": "06-sgdm-selected",
+      "kind": "selected",
+      "status": "completed",
+      "optimizer": "sgdm",
+      "optimizer_name": "sgdm",
+      "lr_field": "sgdm_learning_rate",
+      "learning_rate": 0.05,
+      "lr_selection": {
+        "mode": "adaptive_after_default",
+        "classification": "unstable_or_ending_above_best",
+        "rationale": "The default curve rose often or ended materially above its best value, so the comparison run uses half the default LR.",
+        "default_lr": 0.1,
+        "factor": 0.5,
+        "selected_lr": 0.05,
+        "source_metrics": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/03-sgdm-default/metrics.csv",
+        "evidence": {
+          "validation_points": 11,
+          "first_val_loss": 4.3350677490234375,
+          "final_val_loss": 1.6534517705440521,
+          "best_val_loss": 1.5140759497880936,
+          "absolute_improvement_to_best": 2.820991799235344,
+          "relative_improvement_to_best": 0.6507376499181194,
+          "rise_threshold": 0.08670135498046876,
+          "rise_fraction": 0.0,
+          "ending_above_best_threshold": 0.08670135498046876,
+          "ending_above_best": true,
+          "step_change_volatility": 0.6616285237317899
+        }
+      },
+      "config": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/06-sgdm-selected.py",
+      "config_sha256": "bca182928260f326d79b1f19a93edf344864c14b02363e2a9806e9b9910f8eb2",
+      "run_dir": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/06-sgdm-selected",
+      "protocol": "tokens",
+      "returncode": 0,
+      "command": [
+        "/root/miniconda3/bin/python",
+        "train.py",
+        "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/06-sgdm-selected.py"
+      ],
+      "shell_command": "/root/miniconda3/bin/python train.py /root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/06-sgdm-selected.py",
+      "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/06-sgdm-selected.log",
+      "analysis_commands": [
+        {
+          "command": [
+            "/root/miniconda3/bin/python",
+            "plot.py",
+            "--run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/06-sgdm-selected"
+          ],
+          "shell_command": "/root/miniconda3/bin/python plot.py --run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/06-sgdm-selected",
+          "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/06-sgdm-selected-plot.log",
+          "returncode": 0
+        }
+      ],
+      "started_at_utc": "2026-11-20T05:04:21.341718+00:00",
+      "finished_at_utc": "2026-11-20T05:20:30.506661+00:00",
+      "duration_seconds": 969.161791,
+      "summary": {
+        "step": 5000,
+        "tokens": 92160000,
+        "train_seconds": 867.1671054884791,
+        "wall_seconds": 966.4521711748093,
+        "endpoint_scores": {
+          "loss": 1.5540259033441544,
+          "perplexity": 4.730476338958144,
+          "bits_per_character": 2.241985464167603
+        },
+        "best_val_loss": 1.5458690375089645,
+        "budget": "tokens"
+      }
+    }
+  ],
+  "postprocessing": [
+    {
+      "name": "comparison_plot",
+      "command": [
+        "/root/miniconda3/bin/python",
+        "plot.py",
+        "--runs-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707"
+      ],
+      "shell_command": "/root/miniconda3/bin/python plot.py --runs-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707",
+      "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/comparison-plot.log",
+      "returncode": 0
+    },
+    {
+      "name": "representative_sample",
+      "optimizer": "adamw",
+      "learning_rate": 0.0003,
+      "command": [
+        "/root/miniconda3/bin/python",
+        "sample.py",
+        "--checkpoint=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/01-adamw-default/last.pt",
+        "--device=cuda",
+        "--tokens=400",
+        "--output=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/representative-sample.txt"
+      ],
+      "shell_command": "/root/miniconda3/bin/python sample.py --checkpoint=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/01-adamw-default/last.pt --device=cuda --tokens=400 --output=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/representative-sample.txt",
+      "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/sample.log",
+      "output": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/representative-sample.txt",
+      "returncode": 0
+    }
+  ],
+  "failure": null,
+  "trials": [
+    {
+      "name": "01-adamw-default",
+      "kind": "default",
+      "status": "completed",
+      "optimizer": "adamw",
+      "optimizer_name": "adamw",
+      "lr_field": "learning_rate",
+      "learning_rate": 0.0003,
+      "lr_selection": {
+        "mode": "provided_default",
+        "rationale": "This is the provided default learning rate for this optimizer."
+      },
+      "config": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/01-adamw-default.py",
+      "config_sha256": "11ca43470a3c601322ed7de5fdf5d2aa292d7e0b31efcca01754d3efae10cede",
+      "run_dir": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/01-adamw-default",
+      "protocol": "tokens",
+      "returncode": 0,
+      "command": [
+        "/root/miniconda3/bin/python",
+        "train.py",
+        "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/01-adamw-default.py"
+      ],
+      "shell_command": "/root/miniconda3/bin/python train.py /root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/01-adamw-default.py",
+      "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/01-adamw-default.log",
+      "analysis_commands": [
+        {
+          "command": [
+            "/root/miniconda3/bin/python",
+            "plot.py",
+            "--run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/01-adamw-default"
+          ],
+          "shell_command": "/root/miniconda3/bin/python plot.py --run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/01-adamw-default",
+          "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/01-adamw-default-plot.log",
+          "returncode": 0
+        }
+      ],
+      "started_at_utc": "2026-11-20T03:37:14.369696+00:00",
+      "finished_at_utc": "2026-11-20T03:54:04.087531+00:00",
+      "duration_seconds": 1009.717072,
+      "summary": {
+        "step": 5000,
+        "tokens": 92160000,
+        "train_seconds": 886.8103187009692,
+        "wall_seconds": 1006.7888513524085,
+        "endpoint_scores": {
+          "loss": 4.020456671714783,
+          "perplexity": 55.72654875539958,
+          "bits_per_character": 5.800292902391864
+        },
+        "best_val_loss": 1.5553164631128311,
+        "budget": "tokens"
+      }
+    },
+    {
+      "name": "02-muon-default",
+      "kind": "default",
+      "status": "completed",
+      "optimizer": "muon",
+      "optimizer_name": "muon",
+      "lr_field": "muon_learning_rate",
+      "learning_rate": 0.01,
+      "lr_selection": {
+        "mode": "provided_default",
+        "rationale": "This is the provided default learning rate for this optimizer."
+      },
+      "config": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/02-muon-default.py",
+      "config_sha256": "4ed016165e8071bc980487ea90d140d3717c3c4828d082ad14a7ba14c0d0cf13",
+      "run_dir": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/02-muon-default",
+      "protocol": "tokens",
+      "returncode": 0,
+      "command": [
+        "/root/miniconda3/bin/python",
+        "train.py",
+        "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/02-muon-default.py"
+      ],
+      "shell_command": "/root/miniconda3/bin/python train.py /root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/02-muon-default.py",
+      "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/02-muon-default.log",
+      "analysis_commands": [
+        {
+          "command": [
+            "/root/miniconda3/bin/python",
+            "plot.py",
+            "--run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/02-muon-default"
+          ],
+          "shell_command": "/root/miniconda3/bin/python plot.py --run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/02-muon-default",
+          "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/02-muon-default-plot.log",
+          "returncode": 0
+        }
+      ],
+      "started_at_utc": "2026-11-20T03:54:04.186315+00:00",
+      "finished_at_utc": "2026-11-20T04:12:59.369258+00:00",
+      "duration_seconds": 1135.179693,
+      "summary": {
+        "step": 5000,
+        "tokens": 92160000,
+        "train_seconds": 1053.4738200902939,
+        "wall_seconds": 1132.5471647121012,
+        "endpoint_scores": {
+          "loss": 4.060053497552872,
+          "perplexity": 57.97741264569381,
+          "bits_per_character": 5.857419046663419
+        },
+        "best_val_loss": 1.5412198901176453,
+        "budget": "tokens"
+      }
+    },
+    {
+      "name": "03-sgdm-default",
+      "kind": "default",
+      "status": "completed",
+      "optimizer": "sgdm",
+      "optimizer_name": "sgdm",
+      "lr_field": "sgdm_learning_rate",
+      "learning_rate": 0.1,
+      "lr_selection": {
+        "mode": "provided_default",
+        "rationale": "This is the provided default learning rate for this optimizer."
+      },
+      "config": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/03-sgdm-default.py",
+      "config_sha256": "b617d705aa0eabe0eb5284d32d63c72b0ea48939c64bfa3fa4bf2b0b931f9946",
+      "run_dir": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/03-sgdm-default",
+      "protocol": "tokens",
+      "returncode": 0,
+      "command": [
+        "/root/miniconda3/bin/python",
+        "train.py",
+        "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/03-sgdm-default.py"
+      ],
+      "shell_command": "/root/miniconda3/bin/python train.py /root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/03-sgdm-default.py",
+      "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/03-sgdm-default.log",
+      "analysis_commands": [
+        {
+          "command": [
+            "/root/miniconda3/bin/python",
+            "plot.py",
+            "--run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/03-sgdm-default"
+          ],
+          "shell_command": "/root/miniconda3/bin/python plot.py --run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/03-sgdm-default",
+          "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/03-sgdm-default-plot.log",
+          "returncode": 0
+        }
+      ],
+      "started_at_utc": "2026-11-20T04:12:59.379933+00:00",
+      "finished_at_utc": "2026-11-20T04:29:05.811032+00:00",
+      "duration_seconds": 966.428951,
+      "summary": {
+        "step": 5000,
+        "tokens": 92160000,
+        "train_seconds": 869.1939765848219,
+        "wall_seconds": 963.9622143097222,
+        "endpoint_scores": {
+          "loss": 1.6534517705440521,
+          "perplexity": 5.2249841823457945,
+          "bits_per_character": 2.3854266697129805
+        },
+        "best_val_loss": 1.5140759497880936,
+        "budget": "tokens"
+      }
+    },
+    {
+      "name": "04-adamw-selected",
+      "kind": "selected",
+      "status": "completed",
+      "optimizer": "adamw",
+      "optimizer_name": "adamw",
+      "lr_field": "learning_rate",
+      "learning_rate": 0.00015,
+      "lr_selection": {
+        "mode": "adaptive_after_default",
+        "classification": "unstable_or_ending_above_best",
+        "rationale": "The default curve rose often or ended materially above its best value, so the comparison run uses half the default LR.",
+        "default_lr": 0.0003,
+        "factor": 0.5,
+        "selected_lr": 0.00015,
+        "source_metrics": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/01-adamw-default/metrics.csv",
+        "evidence": {
+          "validation_points": 11,
+          "first_val_loss": 4.3350677490234375,
+          "final_val_loss": 4.020456671714783,
+          "best_val_loss": 1.5553164631128311,
+          "absolute_improvement_to_best": 2.7797512859106064,
+          "relative_improvement_to_best": 0.6412244160513528,
+          "rise_threshold": 0.08670135498046876,
+          "rise_fraction": 0.8,
+          "ending_above_best_threshold": 0.08670135498046876,
+          "ending_above_best": true,
+          "step_change_volatility": 0.896364608975085
+        }
+      },
+      "config": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/04-adamw-selected.py",
+      "config_sha256": "09c1e907dcbf4604f41980974c23fa6c0c813290ba595a247c4b5eff6d4632fa",
+      "run_dir": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/04-adamw-selected",
+      "protocol": "tokens",
+      "returncode": 0,
+      "command": [
+        "/root/miniconda3/bin/python",
+        "train.py",
+        "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/04-adamw-selected.py"
+      ],
+      "shell_command": "/root/miniconda3/bin/python train.py /root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/04-adamw-selected.py",
+      "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/04-adamw-selected.log",
+      "analysis_commands": [
+        {
+          "command": [
+            "/root/miniconda3/bin/python",
+            "plot.py",
+            "--run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/04-adamw-selected"
+          ],
+          "shell_command": "/root/miniconda3/bin/python plot.py --run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/04-adamw-selected",
+          "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/04-adamw-selected-plot.log",
+          "returncode": 0
+        }
+      ],
+      "started_at_utc": "2026-11-20T04:29:05.822990+00:00",
+      "finished_at_utc": "2026-11-20T04:45:30.248462+00:00",
+      "duration_seconds": 984.422848,
+      "summary": {
+        "step": 5000,
+        "tokens": 92160000,
+        "train_seconds": 865.2929114755243,
+        "wall_seconds": 981.8364591933787,
+        "endpoint_scores": {
+          "loss": 3.8217017352581024,
+          "perplexity": 45.681880680218136,
+          "bits_per_character": 5.513550141213611
+        },
+        "best_val_loss": 1.538702443242073,
+        "budget": "tokens"
+      }
+    },
+    {
+      "name": "05-muon-selected",
+      "kind": "selected",
+      "status": "completed",
+      "optimizer": "muon",
+      "optimizer_name": "muon",
+      "lr_field": "muon_learning_rate",
+      "learning_rate": 0.005,
+      "lr_selection": {
+        "mode": "adaptive_after_default",
+        "classification": "unstable_or_ending_above_best",
+        "rationale": "The default curve rose often or ended materially above its best value, so the comparison run uses half the default LR.",
+        "default_lr": 0.01,
+        "factor": 0.5,
+        "selected_lr": 0.005,
+        "source_metrics": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/02-muon-default/metrics.csv",
+        "evidence": {
+          "validation_points": 11,
+          "first_val_loss": 4.3350677490234375,
+          "final_val_loss": 4.060053497552872,
+          "best_val_loss": 1.5412198901176453,
+          "absolute_improvement_to_best": 2.7938478589057922,
+          "relative_improvement_to_best": 0.6444761698442114,
+          "rise_threshold": 0.08670135498046876,
+          "rise_fraction": 0.9,
+          "ending_above_best_threshold": 0.08670135498046876,
+          "ending_above_best": true,
+          "step_change_volatility": 0.9270546970770664
+        }
+      },
+      "config": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/05-muon-selected.py",
+      "config_sha256": "59cdeaac145f76aef9e0abd7e0b07e8916642106c4ec9a94fa43177b0986395c",
+      "run_dir": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/05-muon-selected",
+      "protocol": "tokens",
+      "returncode": 0,
+      "command": [
+        "/root/miniconda3/bin/python",
+        "train.py",
+        "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/05-muon-selected.py"
+      ],
+      "shell_command": "/root/miniconda3/bin/python train.py /root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/05-muon-selected.py",
+      "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/05-muon-selected.log",
+      "analysis_commands": [
+        {
+          "command": [
+            "/root/miniconda3/bin/python",
+            "plot.py",
+            "--run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/05-muon-selected"
+          ],
+          "shell_command": "/root/miniconda3/bin/python plot.py --run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/05-muon-selected",
+          "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/05-muon-selected-plot.log",
+          "returncode": 0
+        }
+      ],
+      "started_at_utc": "2026-11-20T04:45:30.261428+00:00",
+      "finished_at_utc": "2026-11-20T05:04:21.328741+00:00",
+      "duration_seconds": 1131.063945,
+      "summary": {
+        "step": 5000,
+        "tokens": 92160000,
+        "train_seconds": 1050.9144429042935,
+        "wall_seconds": 1128.5091724973172,
+        "endpoint_scores": {
+          "loss": 4.148629903793335,
+          "perplexity": 63.34714912575833,
+          "bits_per_character": 5.985207788686302
+        },
+        "best_val_loss": 1.5518745183944702,
+        "budget": "tokens"
+      }
+    },
+    {
+      "name": "06-sgdm-selected",
+      "kind": "selected",
+      "status": "completed",
+      "optimizer": "sgdm",
+      "optimizer_name": "sgdm",
+      "lr_field": "sgdm_learning_rate",
+      "learning_rate": 0.05,
+      "lr_selection": {
+        "mode": "adaptive_after_default",
+        "classification": "unstable_or_ending_above_best",
+        "rationale": "The default curve rose often or ended materially above its best value, so the comparison run uses half the default LR.",
+        "default_lr": 0.1,
+        "factor": 0.5,
+        "selected_lr": 0.05,
+        "source_metrics": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/03-sgdm-default/metrics.csv",
+        "evidence": {
+          "validation_points": 11,
+          "first_val_loss": 4.3350677490234375,
+          "final_val_loss": 1.6534517705440521,
+          "best_val_loss": 1.5140759497880936,
+          "absolute_improvement_to_best": 2.820991799235344,
+          "relative_improvement_to_best": 0.6507376499181194,
+          "rise_threshold": 0.08670135498046876,
+          "rise_fraction": 0.0,
+          "ending_above_best_threshold": 0.08670135498046876,
+          "ending_above_best": true,
+          "step_change_volatility": 0.6616285237317899
+        }
+      },
+      "config": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/06-sgdm-selected.py",
+      "config_sha256": "bca182928260f326d79b1f19a93edf344864c14b02363e2a9806e9b9910f8eb2",
+      "run_dir": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/06-sgdm-selected",
+      "protocol": "tokens",
+      "returncode": 0,
+      "command": [
+        "/root/miniconda3/bin/python",
+        "train.py",
+        "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/06-sgdm-selected.py"
+      ],
+      "shell_command": "/root/miniconda3/bin/python train.py /root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/configs/06-sgdm-selected.py",
+      "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/06-sgdm-selected.log",
+      "analysis_commands": [
+        {
+          "command": [
+            "/root/miniconda3/bin/python",
+            "plot.py",
+            "--run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/06-sgdm-selected"
+          ],
+          "shell_command": "/root/miniconda3/bin/python plot.py --run-dir=/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/06-sgdm-selected",
+          "log": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/logs/06-sgdm-selected-plot.log",
+          "returncode": 0
+        }
+      ],
+      "started_at_utc": "2026-11-20T05:04:21.341718+00:00",
+      "finished_at_utc": "2026-11-20T05:20:30.506661+00:00",
+      "duration_seconds": 969.161791,
+      "summary": {
+        "step": 5000,
+        "tokens": 92160000,
+        "train_seconds": 867.1671054884791,
+        "wall_seconds": 966.4521711748093,
+        "endpoint_scores": {
+          "loss": 1.5540259033441544,
+          "perplexity": 4.730476338958144,
+          "bits_per_character": 2.241985464167603
+        },
+        "best_val_loss": 1.5458690375089645,
+        "budget": "tokens"
+      }
+    }
+  ],
+  "environment": {
+    "python": "3.12.3 | packaged by Anaconda, Inc. | (main, May  6 2024, 19:46:43) [GCC 11.2.0]",
+    "python_executable": "/root/miniconda3/bin/python",
+    "platform": "Linux-5.15.0-78-generic-x86_64-with-glibc2.35",
+    "torch": "2.12.1+cu130",
+    "cuda_runtime": "13.0",
+    "cuda_available": true,
+    "cuda_devices": [
+      {
+        "index": 0,
+        "name": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+        "total_memory_bytes": 101975851008,
+        "capability": [
+          12,
+          0
+        ]
+      }
+    ],
+    "git_commit": "3896c6f6fb9b40d7d6b4b2936539a69d376ba064",
+    "git_status_short": [],
+    "source_sha256": {
+      "check_solution.py": "7cbed764fda5370f4bb583ed00378d002bbd8e7504e755d8d8702dbc0989da7e",
+      "checkpoint_io.py": "0dc9560b4891e589bf3bd6fab171230bc22d8d7bbd7811d50b0793d9b2c1f5c7",
+      "configurator.py": "6421d8885d3e7fa06fa297dc4fe53ee47afbcf2260fdc0e5fa4a39fac5017138",
+      "evaluate.py": "b19470dacef5fb0819e3994b9ef1b70390d242aca2872954276b9b8c194768e5",
+      "exercise_helpers.py": "a0e177d95a3842308cb8cdc7173ae7a5f66352723f6655ed1a6395a6e23691c6",
+      "export_results.py": "4010c36b198d7b367d845aa0c314149a71a63bfdc446b35b537a959a7c711105",
+      "model.py": "6a6e13b239fc510c358bbade761caeb9dc1675fe5132bb95606ac3493aa5b8c8",
+      "plot.py": "6940a78ffd7dada677faf9f44a3664395d419053636c5d8128eba607fa15b597",
+      "run_all_experiments.py": "e98a5331d20cceca51066ed5fe1cd0e85ecb8fdaadd09f7dae2312b54454e62a",
+      "run_experiments.py": "d8e6a3d450dc2d900e17e3c4fb7253cb1c33d84b4fa3734e67da52bda29cec57",
+      "run_records.py": "1ee27114e659f72b78b10b11e9eef24ebe11b435248b7e4be50de13aa1f27656",
+      "sample.py": "a595ffc18e4513f32652c686e65d05e018f41e3d892ead4a9e432ea1bed9f343",
+      "train.py": "e4b0a91c7c3ee44c59a128cc0b7eef5a139ef3fb664df81208689139f9bbf69d"
+    }
+  },
+  "summary_csv": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/sweep-summary.csv",
+  "finished_at_utc": "2026-11-20T05:20:46.322323+00:00"
+}

@@ -1,0 +1,3 @@
+number of parameters: 0.00M
+PASS: causal mask, shifted positions, provided scores, native optimizer contracts, exactly-once steps and plots
+Next: run the smoke training experiment before a full experiment.

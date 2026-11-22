@@ -1,0 +1,18 @@
+{
+  "status": "completed",
+  "step": 8,
+  "tokens": 1024,
+  "train_seconds": 0.06450769491493702,
+  "checkpoint_seconds": 0.05304020456969738,
+  "wall_seconds": 0.8833852838724852,
+  "endpoint_scores": {
+    "loss": 3.6954944133758545,
+    "perplexity": 40.265475457094986,
+    "bits_per_character": 5.331471463810215
+  },
+  "best_val_loss": 3.6954944133758545,
+  "tokens_per_second": 15874.07519909518,
+  "peak_memory_bytes": null,
+  "budget": "tokens",
+  "output": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/preflight/cpu-smoke"
+}

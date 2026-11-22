@@ -1,0 +1,18 @@
+{
+  "status": "completed",
+  "step": 5000,
+  "tokens": 92160000,
+  "train_seconds": 865.2929114755243,
+  "checkpoint_seconds": 101.19982980564237,
+  "wall_seconds": 981.8364591933787,
+  "endpoint_scores": {
+    "loss": 3.8217017352581024,
+    "perplexity": 45.681880680218136,
+    "bits_per_character": 5.513550141213611
+  },
+  "best_val_loss": 1.538702443242073,
+  "tokens_per_second": 106507.28646655144,
+  "peak_memory_bytes": 21837807104,
+  "budget": "tokens",
+  "output": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/04-adamw-selected"
+}

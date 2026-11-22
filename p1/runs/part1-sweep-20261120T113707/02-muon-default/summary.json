@@ -1,0 +1,18 @@
+{
+  "status": "completed",
+  "step": 5000,
+  "tokens": 92160000,
+  "train_seconds": 1053.4738200902939,
+  "checkpoint_seconds": 63.70902665518224,
+  "wall_seconds": 1132.5471647121012,
+  "endpoint_scores": {
+    "loss": 4.060053497552872,
+    "perplexity": 57.97741264569381,
+    "bits_per_character": 5.857419046663419
+  },
+  "best_val_loss": 1.5412198901176453,
+  "tokens_per_second": 87482.0031048336,
+  "peak_memory_bytes": 20629798400,
+  "budget": "tokens",
+  "output": "/root/autodl-tmp/gzs_dda5001_proj/p1/runs/part1-sweep-20261120T113707/02-muon-default"
+}
